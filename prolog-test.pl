@@ -25,6 +25,8 @@ note(a,21).
 note(a_sharp,22).
 note(b,23).
 
+
+%% SCALES
 major_scale(Root, Second, Third, Fourth, Fifth, Sixth, Seventh) :- 
 	note(Root, RootValue),
 
@@ -118,3 +120,232 @@ blues_minor_scale(Root, Second, Third, Fourth, Fifth, Sixth, Seventh) :-
 
 	note(Seventh, SeventhValue),
 	(SeventhValue =:= RootValue -> true ; false).
+
+
+
+%% CHORDS OF MAJOR SCALE
+i_chord_major_scale(ScaleRoot, ChordRoot, PerfectThird, PerfectFifth) :-
+	major_scale(ScaleRoot, _, Third, _, Fifth, _, _),
+	
+	note(ChordRoot, ChordRootValue),
+	note(ScaleRoot, ScaleRootValue),
+	(ChordRootValue =:= ScaleRootValue -> true ; false),
+	
+	note(PerfectThird, PerfectThirdValue),
+	note(Third, ThirdValue),
+	(PerfectThirdValue =:= ThirdValue -> true ; false),
+	
+	note(PerfectFifth, PerfectFifthValue),
+	note(Fifth, FifthValue),
+	(PerfectFifthValue =:= FifthValue -> true ; false).
+
+ii_chord_major_scale(ScaleRoot, ChordRoot, PerfectThird, PerfectFifth) :-
+	major_scale(ScaleRoot, Second, _, Fourth, _, Sixth, _),
+	
+	note(ChordRoot, ChordRootValue),
+	note(Second, SecondValue),
+	(ChordRootValue =:= SecondValue -> true ; false),
+	
+	note(PerfectThird, PerfectThirdValue),
+	note(Fourth, FourthValue),
+	(PerfectThirdValue =:= FourthValue -> true ; false),
+	
+	note(PerfectFifth, PerfectFifthValue),
+	note(Sixth, SixthValue),
+	(PerfectFifthValue =:= SixthValue -> true ; false).
+
+iii_chord_major_scale(ScaleRoot, ChordRoot, PerfectThird, PerfectFifth) :-
+	major_scale(ScaleRoot, _, Third, _, Fifth, _, Seventh),
+	
+	note(ChordRoot, ChordRootValue),
+	note(Third, ThirdValue),
+	(ChordRootValue =:= ThirdValue -> true ; false),
+	
+	note(PerfectThird, PerfectThirdValue),
+	note(Fifth, FifthValue),
+	(PerfectThirdValue =:= FifthValue -> true ; false),
+	
+	note(PerfectFifth, PerfectFifthValue),
+	note(Seventh, SeventhValue),
+	(PerfectFifthValue =:= SeventhValue -> true ; false).
+
+iv_chord_major_scale(ScaleRoot, ChordRoot, PerfectThird, PerfectFifth) :-
+	major_scale(ScaleRoot, _, _, Fourth, _, Sixth, _),
+	
+	note(ChordRoot, ChordRootValue),
+	note(Fourth, FourthValue),
+	(ChordRootValue =:= FourthValue -> true ; false),
+	
+	note(PerfectThird, PerfectThirdValue),
+	note(Sixth, SixthValue),
+	(PerfectThirdValue =:= SixthValue -> true ; false),
+	
+	note(PerfectFifth, PerfectFifthValue),
+	note(ScaleRoot, ScaleRootValue),
+	(PerfectFifthValue =:= ScaleRootValue -> true ; false).
+
+v_chord_major_scale(ScaleRoot, ChordRoot, PerfectThird, PerfectFifth) :-
+	major_scale(ScaleRoot, Second, _, _, Fifth, _, Seventh),
+	
+	note(ChordRoot, ChordRootValue),
+	note(Fifth, FifthValue),
+	(ChordRootValue =:= FifthValue -> true ; false),
+	
+	note(PerfectThird, PerfectThirdValue),
+	note(Seventh, SeventhValue),
+	(PerfectThirdValue =:= SeventhValue -> true ; false),
+	
+	note(PerfectFifth, PerfectFifthValue),
+	note(Second, SecondValue),
+	(PerfectFifthValue =:= SecondValue -> true ; false).
+
+vi_chord_major_scale(ScaleRoot, ChordRoot, PerfectThird, PerfectFifth) :-
+	major_scale(ScaleRoot, _, Third, _, _, Sixth, _),
+	
+	note(ChordRoot, ChordRootValue),
+	note(Sixth, SixthValue),
+	(ChordRootValue =:= SixthValue -> true ; false),
+	
+	note(PerfectThird, PerfectThirdValue),
+	note(ScaleRoot, ScaleRootValue),
+	(PerfectThirdValue =:= ScaleRootValue -> true ; false),
+	
+	note(PerfectFifth, PerfectFifthValue),
+	note(Third, ThirdValue),
+	(PerfectFifthValue =:= ThirdValue -> true ; false).
+
+vii_chord_major_scale(ScaleRoot, ChordRoot, PerfectThird, PerfectFifth) :-
+	major_scale(ScaleRoot, Second, _, Fourth, _, _, Seventh),
+	
+	note(ChordRoot, ChordRootValue),
+	note(Seventh, SeventhValue),
+	(ChordRootValue =:= SeventhValue -> true ; false),
+	
+	note(PerfectThird, PerfectThirdValue),
+	note(Second, SecondValue),
+	(PerfectThirdValue =:= SecondValue -> true ; false),
+	
+	note(PerfectFifth, PerfectFifthValue),
+	note(Fourth, FourthValue),
+	(PerfectFifthValue =:= FourthValue -> true ; false).
+
+
+
+%% CHORDS OF MINOR SCALE
+i_chord_minor_scale(ScaleRoot, ChordRoot, PerfectThird, PerfectFifth) :-
+	minor_scale(ScaleRoot, _, Third, _, Fifth, _, _),
+	
+	note(ChordRoot, ChordRootValue),
+	note(ScaleRoot, ScaleRootValue),
+	(ChordRootValue =:= ScaleRootValue -> true ; false),
+	
+	note(PerfectThird, PerfectThirdValue),
+	note(Third, ThirdValue),
+	(PerfectThirdValue =:= ThirdValue -> true ; false),
+	
+	note(PerfectFifth, PerfectFifthValue),
+	note(Fifth, FifthValue),
+	(PerfectFifthValue =:= FifthValue -> true ; false).
+
+ii_chord_minor_scale(ScaleRoot, ChordRoot, PerfectThird, PerfectFifth) :-
+	minor_scale(ScaleRoot, Second, _, Fourth, _, Sixth, _),
+	
+	note(ChordRoot, ChordRootValue),
+	note(Second, SecondValue),
+	(ChordRootValue =:= SecondValue -> true ; false),
+	
+	note(PerfectThird, PerfectThirdValue),
+	note(Fourth, FourthValue),
+	(PerfectThirdValue =:= FourthValue -> true ; false),
+	
+	note(PerfectFifth, PerfectFifthValue),
+	note(Sixth, SixthValue),
+	(PerfectFifthValue =:= SixthValue -> true ; false).
+
+iii_chord_minor_scale(ScaleRoot, ChordRoot, PerfectThird, PerfectFifth) :-
+	minor_scale(ScaleRoot, _, Third, _, Fifth, _, Seventh),
+	
+	note(ChordRoot, ChordRootValue),
+	note(Third, ThirdValue),
+	(ChordRootValue =:= ThirdValue -> true ; false),
+	
+	note(PerfectThird, PerfectThirdValue),
+	note(Fifth, FifthValue),
+	(PerfectThirdValue =:= FifthValue -> true ; false),
+	
+	note(PerfectFifth, PerfectFifthValue),
+	note(Seventh, SeventhValue),
+	(PerfectFifthValue =:= SeventhValue -> true ; false).
+
+iv_chord_minor_scale(ScaleRoot, ChordRoot, PerfectThird, PerfectFifth) :-
+	minor_scale(ScaleRoot, _, _, Fourth, _, Sixth, _),
+	
+	note(ChordRoot, ChordRootValue),
+	note(Fourth, FourthValue),
+	(ChordRootValue =:= FourthValue -> true ; false),
+	
+	note(PerfectThird, PerfectThirdValue),
+	note(Sixth, SixthValue),
+	(PerfectThirdValue =:= SixthValue -> true ; false),
+	
+	note(PerfectFifth, PerfectFifthValue),
+	note(ScaleRoot, ScaleRootValue),
+	(PerfectFifthValue =:= ScaleRootValue -> true ; false).
+
+v_chord_minor_scale(ScaleRoot, ChordRoot, PerfectThird, PerfectFifth) :-
+	minor_scale(ScaleRoot, Second, _, _, Fifth, _, Seventh),
+	
+	note(ChordRoot, ChordRootValue),
+	note(Fifth, FifthValue),
+	(ChordRootValue =:= FifthValue -> true ; false),
+	
+	note(PerfectThird, PerfectThirdValue),
+	note(Seventh, SeventhValue),
+	(PerfectThirdValue =:= SeventhValue -> true ; false),
+	
+	note(PerfectFifth, PerfectFifthValue),
+	note(Second, SecondValue),
+	(PerfectFifthValue =:= SecondValue -> true ; false).
+
+vi_chord_minor_scale(ScaleRoot, ChordRoot, PerfectThird, PerfectFifth) :-
+	minor_scale(ScaleRoot, _, Third, _, _, Sixth, _),
+	
+	note(ChordRoot, ChordRootValue),
+	note(Sixth, SixthValue),
+	(ChordRootValue =:= SixthValue -> true ; false),
+	
+	note(PerfectThird, PerfectThirdValue),
+	note(ScaleRoot, ScaleRootValue),
+	(PerfectThirdValue =:= ScaleRootValue -> true ; false),
+	
+	note(PerfectFifth, PerfectFifthValue),
+	note(Third, ThirdValue),
+	(PerfectFifthValue =:= ThirdValue -> true ; false).
+
+vii_chord_minor_scale(ScaleRoot, ChordRoot, PerfectThird, PerfectFifth) :-
+	minor_scale(ScaleRoot, Second, _, Fourth, _, _, Seventh),
+
+	note(ChordRoot, ChordRootValue),
+	note(Seventh, SeventhValue),
+	(ChordRootValue =:= SeventhValue -> true ; false),
+	
+	note(PerfectThird, PerfectThirdValue),
+	note(Second, SecondValue),
+	(PerfectThirdValue =:= SecondValue -> true ; false),
+	
+	note(PerfectFifth, PerfectFifthValue),
+	note(Fourth, FourthValue),
+	(PerfectFifthValue =:= FourthValue -> true ; false).
+
+
+%% TESTS WITH RANDO GENERATION
+choice([X|_], [P|_], Cumul, Rand, X) :-
+    Rand < Cumul + P.
+choice([_|Xs], [P|Ps], Cumul, Rand, Y) :-
+    Cumul1 is Cumul + P,
+    Rand >= Cumul1,
+    choice(Xs, Ps, Cumul1, Rand, Y).
+choice([X], [P], Cumul, Rand, X) :-
+    Rand < Cumul + P.
+
+choice(Xs, Ps, Y) :- random(R), choice(Xs, Ps, 0, R, Y).
