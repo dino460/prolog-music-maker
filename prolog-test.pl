@@ -12,18 +12,18 @@ note(a_sharp,10).
 note(b,11).
 
 %% 1 octave above to account for overflow
-note(c,12).
-note(c_sharp,13).
-note(d,14).
-note(d_sharp,15).
-note(e,16).
-note(f,17).
-note(f_sharp,18).
-note(g,19).
-note(g_sharp,20).
-note(a,21).
-note(a_sharp,22).
-note(b,23).
+%% note(c,12).
+%% note(c_sharp,13).
+%% note(d,14).
+%% note(d_sharp,15).
+%% note(e,16).
+%% note(f,17).
+%% note(f_sharp,18).
+%% note(g,19).
+%% note(g_sharp,20).
+%% note(a,21).
+%% note(a_sharp,22).
+%% note(b,23).
 
 
 %% SCALES
@@ -349,3 +349,62 @@ choice([X], [P], Cumul, Rand, X) :-
     Rand < Cumul + P.
 
 choice(Xs, Ps, Y) :- random(R), choice(Xs, Ps, 0, R, Y).
+
+
+%% make_song(major, c, 4, 2).
+%% select major chords
+%% 2 times get 4 major chords
+%% random number between 1 and 7 to choose chord
+
+get_random_chord(Scale, ScaleRoot, CR, PT, PF) :- 
+	(
+		Scale = "major" -> 
+			choice([1, 2, 3, 4, 5, 6, 7], [0.2, 0.1, 0.2, 0.2, 0.1, 0.1, 0.1], Y),
+
+			( Y =:= 1 -> i_chord_major_scale(ScaleRoot, CR, PT, PF);
+				( Y =:= 2 -> ii_chord_major_scale(ScaleRoot, CR, PT, PF);
+					( Y =:= 3 -> iii_chord_major_scale(ScaleRoot, CR, PT, PF); 
+						( Y =:= 4 -> iv_chord_major_scale(ScaleRoot, CR, PT, PF); 
+							( Y =:= 5 -> v_chord_major_scale(ScaleRoot, CR, PT, PF);
+								( Y =:= 6 -> vi_chord_major_scale(ScaleRoot, CR, PT, PF);
+									( Y =:= 7 -> vii_chord_major_scale(ScaleRoot, CR, PT, PF);
+										false
+										)
+									)
+								)
+							)
+						)
+					)
+				)
+			;
+			choice([1, 2, 3, 4, 5, 6, 7], [0.2, 0.1, 0.2, 0.2, 0.1, 0.1, 0.1], Y),
+
+			( Y =:= 1 -> i_chord_minor_scale(ScaleRoot, CR, PT, PF);
+				( Y =:= 2 -> ii_chord_minor_scale(ScaleRoot, CR, PT, PF);
+					( Y =:= 3 -> iii_chord_minor_scale(ScaleRoot, CR, PT, PF); 
+						( Y =:= 4 -> iv_chord_minor_scale(ScaleRoot, CR, PT, PF); 
+							( Y =:= 5 -> v_chord_minor_scale(ScaleRoot, CR, PT, PF);
+								( Y =:= 6 -> vi_chord_minor_scale(ScaleRoot, CR, PT, PF);
+									( Y =:= 7 -> vii_chord_minor_scale(ScaleRoot, CR, PT, PF);
+										false
+										)
+									)
+								)
+							)
+						)
+					)
+				)
+	).
+
+make_bar(Scale, ScaleRoot, Tempo) :-
+	Tempo > 0,
+	Tempo1 is Tempo-1,
+	get_random_chord(Scale, ScaleRoot, N1, N2, N3),
+	format('~w ~w ~w\n', [N1, N2, N3]),
+	make_bar(Scale, ScaleRoot, Tempo1).
+
+make_music(Scale, ScaleRoot, Tempo, Bars) :- 
+	Bars > 0,
+	Bars1 is Bars-1,
+	make_bar(Scale, ScaleRoot, Tempo),
+	make_music(Scale, Tempo, Bars1).
