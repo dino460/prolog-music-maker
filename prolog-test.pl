@@ -360,7 +360,7 @@ get_random_chord(Scale, ScaleRoot, CR, PT, PF) :-
 	(
 		Scale = "major" -> 
 			choice([1, 2, 3, 4, 5, 6, 7], [0.2, 0.1, 0.2, 0.2, 0.1, 0.1, 0.1], Y),
-
+			format('~w : ', [Y]),
 			( Y =:= 1 -> i_chord_major_scale(ScaleRoot, CR, PT, PF);
 				( Y =:= 2 -> ii_chord_major_scale(ScaleRoot, CR, PT, PF);
 					( Y =:= 3 -> iii_chord_major_scale(ScaleRoot, CR, PT, PF); 
@@ -399,12 +399,29 @@ get_random_chord(Scale, ScaleRoot, CR, PT, PF) :-
 make_bar(Scale, ScaleRoot, Tempo) :-
 	Tempo > 0,
 	Tempo1 is Tempo-1,
-	get_random_chord(Scale, ScaleRoot, N1, N2, N3),
-	format('~w ~w ~w\n', [N1, N2, N3]),
+	get_random_chord(Scale, ScaleRoot, N1, N2, N3), !,
+	format('~w : ~w ~w ~w\n', [Tempo, N1, N2, N3]),
 	make_bar(Scale, ScaleRoot, Tempo1).
 
-make_music(Scale, ScaleRoot, Tempo, Bars) :- 
-	Bars > 0,
-	Bars1 is Bars-1,
-	make_bar(Scale, ScaleRoot, Tempo),
-	make_music(Scale, Tempo, Bars1).
+make_music(Scale, ScaleRoot, Tempo, T, Bars, B) :- 
+
+	( T =:= Tempo -> format('------\n') ; true ),
+	( B > 0 ->
+		( T > 1 -> T1 is T-1, B1 is B ; T1 is Tempo, B1 is B-1 ) ; false ),
+
+	%% T1 is T-1,
+
+	get_random_chord(Scale, ScaleRoot, N1, N2, N3), !,
+	format('~w ~w ~w\n', [N1, N2, N3]),
+	make_music(Scale, ScaleRoot, Tempo, T1, Bars, B1).
+
+%% make_music(Scale, ScaleRoot, Tempo, Bars) :- 
+%% 	Bars > 0,
+%% 	Bars1 is Bars-1,
+%% 	make_bar(Scale, ScaleRoot, Tempo),
+%% 	make_music(Scale, Tempo, Bars1).
+
+%% 4, 1 -> 3, 1
+%% 3, 1 -> 2, 1
+%% 2, 1 -> 1, 1
+%% 1, 1 -> 
