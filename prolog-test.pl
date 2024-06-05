@@ -12,18 +12,18 @@ note(a_sharp,10).
 note(b,11).
 
 %% 1 octave above to account for overflow
-%% note(c,12).
-%% note(c_sharp,13).
-%% note(d,14).
-%% note(d_sharp,15).
-%% note(e,16).
-%% note(f,17).
-%% note(f_sharp,18).
-%% note(g,19).
-%% note(g_sharp,20).
-%% note(a,21).
-%% note(a_sharp,22).
-%% note(b,23).
+note(c,12).
+note(c_sharp,13).
+note(d,14).
+note(d_sharp,15).
+note(e,16).
+note(f,17).
+note(f_sharp,18).
+note(g,19).
+note(g_sharp,20).
+note(a,21).
+note(a_sharp,22).
+note(b,23).
 
 
 %% SCALES
@@ -378,7 +378,7 @@ get_random_chord(Scale, ScaleRoot, CR, PT, PF) :-
 				)
 			;
 			choice([1, 2, 3, 4, 5, 6, 7], [0.2, 0.1, 0.2, 0.2, 0.1, 0.1, 0.1], Y),
-
+			format('~w : ', [Y]),
 			( Y =:= 1 -> i_chord_minor_scale(ScaleRoot, CR, PT, PF);
 				( Y =:= 2 -> ii_chord_minor_scale(ScaleRoot, CR, PT, PF);
 					( Y =:= 3 -> iii_chord_minor_scale(ScaleRoot, CR, PT, PF); 
