@@ -1,3 +1,5 @@
+:- dynamic main/0.
+
 note(c,0).
 note(c_sharp,1).
 note(d,2).
@@ -24,6 +26,58 @@ note(g_sharp,20).
 note(a,21).
 note(a_sharp,22).
 note(b,23).
+
+
+main :- 
+	repeat,
+	nl,
+	writeln(' > Choose a scale [major, minor]'),
+	writeln(' > Exit [e]'),
+	writeln('( string |: {input} )'),
+	read_line_to_string(user_input, S1),
+	string_lower(S1, Answer),
+	format('    data inputed : [ ~w ]', [Answer]),
+	nl,
+	(
+		Answer = "e" ->
+			writeln('~nExiting...'), ! ;
+			(
+				menu_option(Answer) -> 
+					writeln('~nInvalid option') ;
+					true
+			),
+			fail
+	).
+
+
+menu_option(Answer) :-
+	nl,
+	writeln(' > Type a scale root note [c, d, e, f, g, a, b]'),
+	writeln('( predicate |: {input}. )'),
+	read(ScaleRoot),
+	skip_line, %% Clear \n in buffer
+	format('    data inputed : [ ~w ~w ]', [Answer, ScaleRoot]),
+	nl,
+	nl,
+
+	writeln(' > Type a tempo [1, 2, 3, ...]'),
+	writeln('( number |: {input}. )'),
+	read(Tempo),
+	skip_line, %% Clear \n in buffer
+	format('    data inputed : [ ~w ~w ~w ]', [Answer, ScaleRoot, Tempo]),
+	nl,
+	nl,
+
+	writeln(' > Type the number of bars [1, 2, 3, ...]'),
+	writeln('( number |: {input}. )'),
+	read(Bars),
+	skip_line, %% Clear \n in buffer
+	format('    data inputed : [ ~w ~w ~w ~w ]', [Answer, ScaleRoot, Tempo, Bars]),
+	nl,
+	nl,
+
+	make_music(Answer, ScaleRoot, Tempo, Tempo, Bars, Bars),
+	nl.
 
 
 %% SCALES
@@ -409,19 +463,6 @@ make_music(Scale, ScaleRoot, Tempo, T, Bars, B) :-
 	( B > 0 ->
 		( T > 1 -> T1 is T-1, B1 is B ; T1 is Tempo, B1 is B-1 ) ; false ),
 
-	%% T1 is T-1,
-
 	get_random_chord(Scale, ScaleRoot, N1, N2, N3), !,
 	format('~w ~w ~w\n', [N1, N2, N3]),
 	make_music(Scale, ScaleRoot, Tempo, T1, Bars, B1).
-
-%% make_music(Scale, ScaleRoot, Tempo, Bars) :- 
-%% 	Bars > 0,
-%% 	Bars1 is Bars-1,
-%% 	make_bar(Scale, ScaleRoot, Tempo),
-%% 	make_music(Scale, Tempo, Bars1).
-
-%% 4, 1 -> 3, 1
-%% 3, 1 -> 2, 1
-%% 2, 1 -> 1, 1
-%% 1, 1 -> 
